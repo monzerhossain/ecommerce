@@ -1,3 +1,10 @@
+
+
+This project created REST APIs for eCommerce site
+to create, retrieve , update and delete products
+along with categories, attributes and images.
+
+
 Requirements
 ============
 
@@ -19,12 +26,13 @@ bin/console doctrine:migrations:migrate
 Test
 ====
 
-./phpunt -c config
+./phpunit -c config
 
 
 Run
 ===
 symfony server:start --port=8080
+
 
 API Endpoints
 =============
