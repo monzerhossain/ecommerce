@@ -1,0 +1,11 @@
+default:
+    resource: ../../src/Controller/
+    type: annotation
+
+prodcut:
+    resource: ../../src/MyCommerce/ProductBundle/Controller/
+    type: annotation
+
+kernel:
+    resource: ../../src/Kernel.php
+    type: annotation

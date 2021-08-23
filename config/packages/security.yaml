@@ -1,0 +1,53 @@
+security:
+    # https://symfony.com/doc/current/security/experimental_authenticators.html
+    enable_authenticator_manager: false
+    # https://symfony.com/doc/current/security.html#c-hashing-passwords
+    password_hashers:
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+        App\Entity\User:
+            algorithm: auto
+
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        # used to reload user from session & other features (e.g. switch_user)
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: apiToken
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+        api:
+            anonymous: true
+            lazy: true
+            pattern: ^/api/
+            guard:
+                authenticators:
+                    - App\Security\TokenAuthenticator
+            access_denied_handler: App\Security\AccessDeniedHandler
+
+        default:
+                anonymous: true
+                lazy: true
+                guard:
+                    authenticators:
+                        - App\Security\LoginFormAuthenticator
+                logout:
+                      path: app_logout
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        - { path: '^/api/product/create', roles: ROLE_ADMIN }
+        - { path: '^/api/product/update', roles: ROLE_ADMIN }
+        - { path: '^/api/product/delete', roles: ROLE_ADMIN }
+        # - { path: ^/admin, roles: ROLE_ADMIN }
+        # - { path: ^/profile, roles: ROLE_USER }

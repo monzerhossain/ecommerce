@@ -1,0 +1,66 @@
+Requirements
+============
+
+PHP 7.4
+
+Install
+=======
+
+composer install
+
+Database
+========
+
+bin/console doctrine:database:create
+
+bin/console doctrine:migrations:migrate
+
+
+Test
+====
+
+./phpunt -c config
+
+
+Run
+===
+symfony server:start --port=8080
+
+API Endpoints
+=============
+
+URI: /api/product
+
+Method: GET
+
+Description: Get all the products
+
+
+URI: /api/product/{id}
+
+Method: GET
+
+Description: Retrieve the product with id
+
+
+URI: /api/product/delete/{id}
+
+Method: DELETE
+
+Description: Delete the product with id
+
+
+URI: /api/product/create
+
+Method: POST
+
+Description: Create a new product
+
+
+URI: /api/product/update/{id}
+
+Method: PUT
+
+Description: Update the product with id
+
+
