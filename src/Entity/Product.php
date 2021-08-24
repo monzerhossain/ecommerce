@@ -35,12 +35,18 @@ class Product
     private $categories;
 
     /**
-     * @ORM\OneToMany(targetEntity=Attribute::class, mappedBy="product")
+     * @ORM\OneToMany(targetEntity=Attribute::class,
+     *     mappedBy="product",
+     *     orphanRemoval=true,
+     *     cascade={"persist", "remove"})
      */
     private $attributes;
 
     /**
-     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="product")
+     * @ORM\OneToMany(targetEntity=Image::class,
+     *  mappedBy="product",
+     *  orphanRemoval=true,
+     *  cascade={"persist", "remove"})
      */
     private $images;
 

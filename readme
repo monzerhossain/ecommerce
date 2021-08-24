@@ -72,3 +72,49 @@ Method: PUT
 Description: Update the product with id
 
 
+API Authentication
+==================
+
+Create a dummy user with API token
+
+bin/console doctrine:query:sql "insert into user(username,roles,password,api_token) values ('testuser', '[\"ROLE_ADMIN\"]', 'testpass', 'ABCD')"
+
+Sample API call
+===============
+
+Using API (with token) to insert a product
+
+```
+curl --request POST \
+  --url http://localhost:8080/api/product/create \
+  --header 'Content-Type: application/json' \
+  --header 'X-AUTH-TOKEN: ABCD' \
+  --cookie PHPSESSID=7dt2h577qk5cds5jfmjupecs6d \
+  --data '{
+"name": "Sample 1",
+"description": "Its test product",
+"attributes": [
+{
+"name": "price",
+"value": "300.00"
+},
+{
+"name": "gst",
+"value": "10.00"
+}
+],
+"categories": [
+{
+"name": "cat2",
+"description": "test category 2"
+}
+],
+"images": [
+{
+"url": "sample3.com",
+"height": "10.0",
+"weight": "20.0"
+}
+]
+}'
+```

@@ -116,19 +116,20 @@ class ProductService{
             $product->setDescription($productData["description"]);
 
             foreach ($productData["categories"] as $categoryData) {
-                $category = $entityManager->getRepository(Category::class)->findOneBy(array('name' => $categoryData["name"]));
-                if (!$category) {
+                $category = $entityManager->getRepository(Category::class)->findOneBy(array('id' => array_key_exists("id", $categoryData)?$categoryData["id"]:"") );
+                if (!$category)
                     $category = new Category();
-                    $category->setName($categoryData["name"]);
-                    $category->setDescription($categoryData["description"]);
-                    $entityManager->persist($category);
-                }
+
+                $category->setName($categoryData["name"]);
+                $category->setDescription($categoryData["description"]);
+                $entityManager->persist($category);
+
                 $product->addCategory($category);
             }
 
             foreach ($productData["attributes"] as $attributeData) {
 
-                $attribute = $entityManager->getRepository(Attribute::class)->findOneBy(array('name' => $attributeData["name"], 'product' => $product));
+                $attribute = $entityManager->getRepository(Attribute::class)->findOneBy(array('id' => array_key_exists("id", $attributeData)?$attributeData["id"]:""));
 
                 if(!$attribute)
                     $attribute = new Attribute();
@@ -141,7 +142,7 @@ class ProductService{
 
             foreach ($productData["images"] as $imageData) {
 
-                $image = $entityManager->getRepository(Image::class)->findOneBy(array('url' => $imageData["url"], 'product'=>$product ));
+                $image = $entityManager->getRepository(Image::class)->findOneBy(array('id' => array_key_exists("id", $imageData)?$imageData["id"]:""));
                 if(!$image)
                     $image = new Image();
                 $image->setUrl($imageData["url"]);
